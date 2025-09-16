@@ -9,9 +9,9 @@ class BookSpider(scrapy.Spider):
     def parse(self, response):
         for book in response.css("article.product_pod"):
             item = BooksItem()
-            item['url'] = book.css("h3 > a::attr(href)")
-            item['name'] = book.css("h3 > a::attr(title)")
-            item['price'] = book.css(".price_color::text")
+            item['url'] = book.css("h3 > a::attr(href)").get()
+            item['name'] = book.css("h3 > a::attr(title)").get()
+            item['price'] = book.css(".price_color::text").get()
             yield item
         
         # Target the href to get the next pages
