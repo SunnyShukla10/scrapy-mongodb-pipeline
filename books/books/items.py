@@ -7,6 +7,7 @@ import scrapy
 
 
 class BooksItem(scrapy.Item):
+    _id = scrapy.Field() # _id fields when the item pipelie adds the value for ._id after calculating hashval from .url 
     url = scrapy.Field()
     price = scrapy.Field()
     name = scrapy.Field()
