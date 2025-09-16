@@ -85,3 +85,6 @@ DOWNLOAD_DELAY = 1
 
 # Set settings whose default value is deprecated to a future-proof value
 FEED_EXPORT_ENCODING = "utf-8"
+
+MONGO_URI = "mongodb://localhost:27017" # Default port
+MONGO_DATABASE = "books_db" 
