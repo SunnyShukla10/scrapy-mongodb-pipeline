@@ -54,7 +54,7 @@ class MongoPipeline:
         # returns the hashvalues of the url
         # url gets encoded to bytes and then sha256() produces a fixed 64-character hex string no matter how long input is 
         # after we get hexstring, the .hexdigest() turns it into readable hex string instead of raw bytes
-        return hashlib.sha256(url.encodee("utf-8").hexdigest())
+        return hashlib.sha256(url.encode("utf-8")).hexdigest()
 
 # class BooksPipeline:
 #     def process_item(self, item, spider):

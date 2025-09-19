@@ -6,7 +6,26 @@ class BookSpider(scrapy.Spider):
     allowed_domains = ["books.toscrape.com"]
     start_urls = ["https://books.toscrape.com/"]
 
+    def start_requests(self):
+        for url in self.start_urls:
+            yield scrapy.Request(
+                url,
+                callback=self.parse,
+                errback=self.log_error,  # handle errors on first request
+            )
+
     def parse(self, response):
+
+        # (@url) specifies the url to test the parse method
+        # first (@returns) specifies that the min number of items should be 20 per request and max is 20 
+        # second (@returns) specifies that the .parse() method generate at least 1 and at most 50 requests
+        # (@scrapes) specifies that each returned item should have url, items, and price
+        """
+        @url https://books.toscrape.com
+        @returns items 20 20
+        @returns request 1 50
+        @scrapes url name price
+        """
         for book in response.css("article.product_pod"):
             item = BooksItem()
             item['url'] = book.css("h3 > a::attr(href)").get()
@@ -21,4 +40,10 @@ class BookSpider(scrapy.Spider):
         #    urljoin does that for you and this is done recursively until no more next links are left
         if next_page:
             next_page_url = response.urljoin(next_page)
-            yield scrapy.Request(url=next_page_url, callback=self.parse)
+            self.logger.info(f"Going to the next page {next_page_url}")
+            yield scrapy.Request(url=next_page_url, callback=self.parse, errback=self.log_error)
+    
+
+    # a function to log and handle errors 
+    def log_error(self, faliure):
+        self.logger.error(repr(faliure)) # return the error in a developer-friendly format

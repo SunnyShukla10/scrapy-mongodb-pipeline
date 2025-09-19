@@ -88,3 +88,7 @@ FEED_EXPORT_ENCODING = "utf-8"
 
 MONGO_URI = "mongodb://localhost:27017" # Default port
 MONGO_DATABASE = "books_db" 
+
+# Debugging purposes 
+LOG_LEVEL = "WARNING"
+LOG_FILE = "book_scraper.log"
